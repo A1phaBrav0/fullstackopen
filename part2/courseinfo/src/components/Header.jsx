@@ -1,6 +1,7 @@
-const Header = ({header}) => {
+const Header = ({header, level}) => {
+
     return (
-        <h1>{header}</h1>
+        <h2>{header}</h2>
     )
 }
 
