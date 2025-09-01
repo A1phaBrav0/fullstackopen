@@ -65,6 +65,8 @@ const App = () => {
             id: persons.length + 1
         }
 
+
+
         setPersons(persons.concat(newPerson))
         setNewName('')
         setNewNumber('')
