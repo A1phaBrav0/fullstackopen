@@ -74,6 +74,21 @@ const App = () => {
 
     }
 
+    const deletePerson = (id) => {
+        const [personToDelete] = persons.filter(person => person.id === id)
+        const confirmDelete = confirm(`Are you sure you wish to delete ${personToDelete.name} ?`)
+        if (confirmDelete){
+            personsService
+                .remove(id)
+                .then(() => setPersons(persons.filter(person => person.id !== id))
+                )
+                .catch(() => {
+                    alert(`${personToDelete.name} has already been deleted from the server`)
+                    setPersons(persons.filter(person => person.id !== id))
+                })
+        }
+    }
+
     return (
         <>
             <h2>Phonebook</h2>
@@ -90,7 +105,7 @@ const App = () => {
                 handleNewNumber={handleNewNumber}
             />
             <h2>Numbers</h2>
-            <Persons persons={contactsToShow}/>
+            <Persons persons={contactsToShow} deletePerson={deletePerson}/>
         </>
     )
 }
