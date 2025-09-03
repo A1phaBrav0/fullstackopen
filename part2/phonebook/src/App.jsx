@@ -40,6 +40,20 @@ const App = () => {
 
     const handleNewNumber = (e) => setNewNumber(e.target.value)
 
+    const updatePersonNumber = (id, personObj) => {
+
+        personsService
+            .update(id, personObj)
+            .then(response => {
+                setPersons(
+                    persons.map(person => person.id === id ? response : person)
+                )
+                setNewName("")
+                setNewNumber("")
+            })
+
+    }
+
     const addPerson = (e) => {
         e.preventDefault()
 
@@ -47,16 +61,20 @@ const App = () => {
             return alert("Please enter both a mame and phone number")
         }
 
-        const nameInPhonebook = persons.some(person =>
+        if (!isValidNumberFormat(newNumber)) {
+            return alert(`${newNumber} is not a valid phone number`)
+        }
+
+        const [personInPhonebook] = persons.filter(person =>
             person.name.toLowerCase() === newName.toLowerCase()
         )
 
-        if (nameInPhonebook) {
-            return alert(`${newName} has already been added to the phonebook`)
-        }
-
-        if (!isValidNumberFormat(newNumber)) {
-            return alert(`${newNumber} is not a valid phone number`)
+        if (personInPhonebook) {
+            const confirmNumberUpdate = confirm(`${personInPhonebook.name} is already in the phonebook, replace the old number with a new one?`)
+            confirmNumberUpdate
+                ? updatePersonNumber(personInPhonebook.id, {...personInPhonebook, number: newNumber})
+                : (setNewName(""), setNewNumber(""))
+            return
         }
 
         const newPerson = {
@@ -66,18 +84,18 @@ const App = () => {
 
         personsService
             .create(newPerson)
-            .then(returnedPerson => {
-                setPersons(persons.concat(returnedPerson))
+            .then(response => {
+                setPersons(persons.concat(response))
                 setNewName('')
                 setNewNumber('')
             })
-
     }
 
     const deletePerson = (id) => {
         const [personToDelete] = persons.filter(person => person.id === id)
         const confirmDelete = confirm(`Are you sure you wish to delete ${personToDelete.name} ?`)
-        if (confirmDelete){
+
+        if (confirmDelete) {
             personsService
                 .remove(id)
                 .then(() => setPersons(persons.filter(person => person.id !== id))
