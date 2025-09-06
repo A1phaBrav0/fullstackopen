@@ -40,6 +40,15 @@ const App = () => {
         ? persons.filter(person => person.name.toLowerCase().includes(searchStr.toLowerCase()))
         : persons
 
+    const msg = (text, type) => {
+        setNotificationType(type)
+        setNotification(text)
+        setTimeout(() => {
+            setNotificationType(null)
+            setNotification(null)
+        }, 5000)
+    }
+
     const handleNewName = (e) => setNewName(e.target.value)
 
     const handleNewNumber = (e) => setNewNumber(e.target.value)
@@ -55,17 +64,20 @@ const App = () => {
                 setNewName("")
                 setNewNumber("")
             })
+            .catch(() => {
+                msg(
+                    `Information on ${personObj.name} has already been removed from server`,
+                    "error"
+                )
+
+                // Remove person to align w/ db:
+                setPersons(
+                    persons.filter(person => person.id !== id)
+                )
+            })
 
     }
 
-    const msg = (text, type) => {
-        setNotificationType(type)
-        setNotification(text)
-        setTimeout(() => {
-            setNotificationType(null)
-            setNotification(null)
-        }, 5000)
-    }
 
     const addPerson = (e) => {
         e.preventDefault()
