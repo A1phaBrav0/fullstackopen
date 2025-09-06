@@ -3,6 +3,8 @@ import Persons from "./components/Persons.jsx";
 import PersonForm from "./components/PersonForm.jsx";
 import Filter from "./components/Filter.jsx";
 import personsService from "./services/persons.js"
+import Notification from "./components/Notification.jsx";
+import "./index.css"
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -19,6 +21,8 @@ const App = () => {
     const [newNumber, setNewNumber] = useState('')
     const [searchStr, setSearchStr] = useState('')
     const [searchEntries, setSearchEntries] = useState(false)
+    const [notification, setNotification] = useState(null)
+    const [notificationType, setNotificationType] = useState(null)
 
     const isEmpty = (string) => !string.replace(/\s/g, '').length
 
@@ -41,17 +45,26 @@ const App = () => {
     const handleNewNumber = (e) => setNewNumber(e.target.value)
 
     const updatePersonNumber = (id, personObj) => {
-
         personsService
             .update(id, personObj)
             .then(response => {
                 setPersons(
                     persons.map(person => person.id === id ? response : person)
                 )
+                msg(`Updated ${personObj.name}`, "success")
                 setNewName("")
                 setNewNumber("")
             })
 
+    }
+
+    const msg = (text, type) => {
+        setNotificationType(type)
+        setNotification(text)
+        setTimeout(() => {
+            setNotificationType(null)
+            setNotification(null)
+        }, 5000)
     }
 
     const addPerson = (e) => {
@@ -86,6 +99,7 @@ const App = () => {
             .create(newPerson)
             .then(response => {
                 setPersons(persons.concat(response))
+                msg(`Added ${newPerson.name}`, "success")
                 setNewName('')
                 setNewNumber('')
             })
@@ -98,7 +112,10 @@ const App = () => {
         if (confirmDelete) {
             personsService
                 .remove(id)
-                .then(() => setPersons(persons.filter(person => person.id !== id))
+                .then(() => {
+                        setPersons(persons.filter(person => person.id !== id))
+                        msg(`Deleted ${personToDelete.name}`, "success")
+                    }
                 )
                 .catch(() => {
                     alert(`${personToDelete.name} has already been deleted from the server`)
@@ -110,6 +127,7 @@ const App = () => {
     return (
         <>
             <h2>Phonebook</h2>
+            <Notification message={notification} type={notificationType}/>
             <Filter
                 searchStr={searchStr}
                 handleSearchFocus={handleSearchFocus}
