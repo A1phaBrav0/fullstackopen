@@ -1,5 +1,6 @@
-const Country = ({countryObj}) =>
+import Weather from "./Weather.jsx";
 
+const Country = ({countryObj}) =>
     countryObj &&
         <div>
             <h2>{countryObj.name.common}</h2>
@@ -14,7 +15,7 @@ const Country = ({countryObj}) =>
                 }
             </ul>
             <img src={countryObj.flags.png} alt={countryObj.flags.alt}/>
+            <Weather city={countryObj.capital[0]}/>
         </div>
-
 
 export default Country
