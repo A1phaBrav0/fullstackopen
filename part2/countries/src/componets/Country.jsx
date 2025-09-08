@@ -1,5 +1,6 @@
-const Country = ({countryObj}) => {
-    return (
+const Country = ({countryObj}) =>
+
+    countryObj &&
         <div>
             <h2>{countryObj.name.common}</h2>
             <div>{`Capital: ${countryObj.capital[0]}`}</div>
@@ -14,7 +15,6 @@ const Country = ({countryObj}) => {
             </ul>
             <img src={countryObj.flags.png} alt={countryObj.flags.alt}/>
         </div>
-    )
-}
+
 
 export default Country
