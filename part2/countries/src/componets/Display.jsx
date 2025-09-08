@@ -1,6 +1,6 @@
 import Country from "./Country.jsx"
 
-const Display = ({searchResults}) => {
+const Display = ({searchResults, onClick}) => {
     const len = searchResults.length
     switch (true) {
         case (len > 10):
@@ -9,6 +9,7 @@ const Display = ({searchResults}) => {
             return searchResults.map(country =>
                 <div key={country.name.common}>
                     {country.name.common}
+                    <button onClick={() => onClick(country)}>Show</button>
                 </div>
             )
         case (len === 1):

@@ -34,10 +34,12 @@ const App = () => {
         filterCountries(txt)
     }
 
+    const handleClick = (countryObj) => setSearchResults([countryObj])
+
     return (
         <>
             <Search value={value} onChange={handleChange}/>
-            <Display searchResults={searchResults} />
+            <Display searchResults={searchResults} onClick={handleClick} />
         </>
     )
 }
