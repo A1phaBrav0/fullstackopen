@@ -5,7 +5,6 @@ import Display from "./componets/Display.jsx";
 
 const App = () => {
     const [countries, setCountries] = useState([])
-    const [searchResults, setSearchResults] = useState([])
     const [value, setValue] = useState("")
 
     useEffect(() => {
@@ -15,31 +14,28 @@ const App = () => {
 
     }, []);
 
-    const filterCountries = (searchStr) => {
-        if (searchStr.length > 0) {
-            const results = countries.filter(country =>
-                country
-                    .name
-                    .common
-                    .toLowerCase()
-                    .includes(searchStr.toLowerCase())
-            )
-            setSearchResults(results)
-        } else setSearchResults([])
-    }
+    const searchResults = value.length > 0
+        ? countries.filter(country =>
+            country
+                .name
+                .common
+                .toLowerCase()
+                .includes(value.toLowerCase()))
+        : []
 
     const handleChange = (e) => {
-        const txt = e.target.value
-        setValue(txt)
-        filterCountries(txt)
+        setValue(e.target.value)
     }
 
-    const handleClick = (countryObj) => setSearchResults([countryObj])
+    const handleClick = (countryObj) => {
+        setValue(countryObj.name.common)
+        console.log(searchResults)
+    }
 
     return (
         <>
             <Search value={value} onChange={handleChange}/>
-            <Display searchResults={searchResults} onClick={handleClick} />
+            <Display searchResults={searchResults} onClick={handleClick}/>
         </>
     )
 }

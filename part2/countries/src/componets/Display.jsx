@@ -1,4 +1,5 @@
 import Country from "./Country.jsx"
+import CountryList from "./ContriesList.jsx";
 
 const Display = ({searchResults, onClick}) => {
     const len = searchResults.length
@@ -6,15 +7,10 @@ const Display = ({searchResults, onClick}) => {
         case (len > 10):
             return <p>Too many matches, specify another filter</p>
         case (len > 1):
-            return searchResults.map(country =>
-                <div key={country.name.common}>
-                    {country.name.common}
-                    <button onClick={() => onClick(country)}>Show</button>
-                </div>
-            )
+            return <CountryList searchResults={searchResults} onClick={onClick}/>
         case (len === 1):
             const [country] = searchResults
-            return <Country countryObj={country} />
+            return <Country countryObj={country}/>
         default:
             return null
     }
