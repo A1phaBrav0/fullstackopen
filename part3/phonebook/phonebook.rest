@@ -6,3 +6,8 @@ GET http://localhost:3001/api/persons
 Accept: application/json
 
 ###
+
+GET http://localhost:3001/api/info
+Accept: text/html
+
+###
