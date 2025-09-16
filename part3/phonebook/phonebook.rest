@@ -15,6 +15,14 @@ Accept: application/json
 
 ###
 
-DELETE localhost:3001/api/persons/3
+DELETE http://localhost:3001/api/persons/3
 
 ###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Big Bad Bob",
+  "number": "04859290339"
+}
