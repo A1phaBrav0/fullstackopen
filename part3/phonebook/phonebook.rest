@@ -1,7 +1,5 @@
 ### Phonebook api testing client
 
-###
-
 GET http://localhost:3001/api/persons
 Accept: application/json
 
@@ -9,5 +7,10 @@ Accept: application/json
 
 GET http://localhost:3001/api/info
 Accept: text/html
+
+###
+
+GET http://localhost:3001/api/persons/2
+Accept: application/json
 
 ###
