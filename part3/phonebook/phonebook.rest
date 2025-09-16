@@ -15,7 +15,7 @@ Accept: application/json
 
 ###
 
-DELETE http://localhost:3001/api/persons/3
+DELETE http://localhost:3001/api/persons/1
 
 ###
 
@@ -24,5 +24,24 @@ Content-Type: application/json
 
 {
   "name": "Big Bad Bob",
+  "number": "04859290339"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "number": "04859290339"
+}
+
+###
+
+POST http://localhost:3001/api/persons
+Content-Type: application/json
+
+{
+  "name": "Ada Lovelace",
   "number": "04859290339"
 }

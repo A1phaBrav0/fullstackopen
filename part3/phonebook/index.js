@@ -30,6 +30,11 @@ const generateId = () => {
     return String(Math.round(id))
 }
 
+const checkName = (name) => {
+    const [person] = contacts.filter(contact => contact.name === name)
+    return person
+}
+
 app.get("/api/persons", (request, response) => {
     response.json(contacts)
 })
@@ -47,33 +52,38 @@ app.get("/api/info", (request, response) => {
 
 app.get("/api/persons/:id", (request, response) => {
     const id = request.params.id
-    const person = contacts.find(p => p.id === id)
+    const person = contacts.find(contact => contact.id === id)
 
     if (person) {
         response.json(person)
     } else response.send(404).end()
-
 })
 
 app.delete("/api/persons/:id", (request, response) => {
     const id = request.params.id
-    contacts = contacts.filter(p => p.id !== id)
+    contacts = contacts.filter(contact => contact.id !== id)
     response.status(204).end()
 })
 
 app.post("/api/persons", (request, response) => {
-    const body = request.body
+    const {name, number} = request.body
 
-    if (!body) {
-        return response.status(404).json({
-            error: "content missing"
+    if (!name || !number) {
+        return response.status(400).json({
+            error: "content missing, must provide both name and number"
+        })
+    }
+
+    if (checkName(name)) {
+        return response.status(400).json({
+            error: "name must be unique"
         })
     }
 
     const contact = {
         id: generateId(),
-        name: body.name,
-        number: body.number,
+        name,
+        number,
     }
 
     contacts = contacts.concat(contact)
