@@ -32,12 +32,12 @@ app.get("/api/persons", (request, response) => {
 
 app.get("/api/info", (request, response) => {
     response.send(
-        `
-                <div>
-                    <p>Phonebook has info for ${contacts.length} people</p>
-                    <p>${new Date().toString()}</p>
-                </div>
-              `
+`
+        <div>
+            <p>Phonebook has info for ${contacts.length} people</p>
+            <p>${new Date().toString()}</p>
+        </div>
+      `
     )
 })
 
