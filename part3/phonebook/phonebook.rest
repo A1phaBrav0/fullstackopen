@@ -14,3 +14,7 @@ GET http://localhost:3001/api/persons/2
 Accept: application/json
 
 ###
+
+DELETE localhost:3001/api/persons/3
+
+###
