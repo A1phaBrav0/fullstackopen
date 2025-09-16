@@ -30,10 +30,8 @@ const generateId = () => {
     return String(Math.round(id))
 }
 
-const checkName = (name) => {
-    const [person] = contacts.filter(contact => contact.name === name)
-    return person
-}
+const checkName = (name) => contacts.find(contact =>
+    contact.name === name)
 
 app.get("/api/persons", (request, response) => {
     response.json(contacts)
