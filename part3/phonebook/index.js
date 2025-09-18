@@ -1,4 +1,6 @@
 const express = require("express")
+const morgan = require("morgan")
+
 const app = express()
 app.use(express.json())
 
@@ -24,14 +26,6 @@ let contacts = [
         "number": "39-23-6423122"
     }
 ]
-
-const generateId = () => {
-    const id = Math.random() * (900000 - 5) + 5
-    return String(Math.round(id))
-}
-
-const checkName = (name) => contacts.find(contact =>
-    contact.name === name)
 
 app.get("/api/persons", (request, response) => {
     response.json(contacts)
@@ -62,6 +56,17 @@ app.delete("/api/persons/:id", (request, response) => {
     contacts = contacts.filter(contact => contact.id !== id)
     response.status(204).end()
 })
+
+morgan.token("obj", (response) => JSON.stringify(response.body))
+
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms :obj"))
+
+const generateId = () => {
+    const id = Math.random() * (900000 - 5) + 5
+    return String(Math.round(id))
+}
+
+const checkName = (name) => contacts.find(contact => contact.name === name)
 
 app.post("/api/persons", (request, response) => {
     const {name, number} = request.body
