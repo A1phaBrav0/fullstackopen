@@ -57,7 +57,7 @@ app.delete("/api/persons/:id", (request, response) => {
     response.status(204).end()
 })
 
-morgan.token("obj", (response) => JSON.stringify(response.body))
+morgan.token("obj", (request) => JSON.stringify(request.body))
 
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :obj"))
 
