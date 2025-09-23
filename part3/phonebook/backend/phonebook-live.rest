@@ -1,0 +1,47 @@
+### Phonebook api testing client
+
+GET https://fullstackopen-phonebook-2w4s.onrender.com/api/persons
+Accept: application/json
+
+###
+
+GET https://fullstackopen-phonebook-2w4s.onrender.com/api/info
+Accept: text/html
+
+###
+
+GET https://fullstackopen-phonebook-2w4s.onrender.com/api/persons/2
+Accept: application/json
+
+###
+
+DELETE https://fullstackopen-phonebook-2w4s.onrender.com/api/persons/2
+
+###
+
+POST https://fullstackopen-phonebook-2w4s.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Big Bad Bob",
+  "number": "04859290339"
+}
+
+###
+
+POST https://fullstackopen-phonebook-2w4s.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "number": "04859290339"
+}
+
+###
+
+POST https://fullstackopen-phonebook-2w4s.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Ada Lovelace",
+  "number": "04859290339"
+}
